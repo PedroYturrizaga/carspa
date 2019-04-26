@@ -1,0 +1,160 @@
+package pe.com.tintegro.controller;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import pe.com.tintegro.dao.util.Constantes;
+import pe.com.tintegro.dto.request.EditaBolsaUsuarioRequest;
+import pe.com.tintegro.dto.request.EliminaBolsaUsuarioRequest;
+import pe.com.tintegro.dto.request.InsertaBolsaUsuarioRequest;
+import pe.com.tintegro.dto.request.ListaBolsaUsuarioRequest;
+import pe.com.tintegro.dto.request.TiempoBolsaDisponibleRequest;
+import pe.com.tintegro.dto.response.EditaBolsaUsuarioResponse;
+import pe.com.tintegro.dto.response.EliminaBolsaUsuarioResponse;
+import pe.com.tintegro.dto.response.InsertaBolsaUsuarioResponse;
+import pe.com.tintegro.dto.response.ListaBolsaUsuarioResponse;
+import pe.com.tintegro.dto.response.TiempoBolsaDisponibleResponse;
+import pe.com.tintegro.services.BolsaUsuarioServices;
+import pe.com.tintegro.services.util.Util;
+
+@RestController
+@RequestMapping("/bolsaUsuario")
+public class BolsaUsuarioController
+{
+	protected transient final Logger LOGGER = Logger.getLogger(this.getClass());
+
+	@Resource(name = "bolsaUsuarioServices")
+	protected BolsaUsuarioServices bolsaUsuarioServices;
+
+	@RequestMapping(value = "/insertaBolsaUsuario", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public InsertaBolsaUsuarioResponse insertaBolsaUsuario(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody InsertaBolsaUsuarioRequest request)
+	{
+		InsertaBolsaUsuarioResponse response = new InsertaBolsaUsuarioResponse();
+		try
+		{
+			response = bolsaUsuarioServices.insertaBolsaUsuario(codUsuario, idInstancia, request);
+		}
+		catch (Exception ex)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se ha podido agregar bolsa usuario ");
+			System.out.println(ex.getMessage());
+			LOGGER.error(codError, ex);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/editaBolsaUsuario", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public EditaBolsaUsuarioResponse editaBolsaUsuario(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody EditaBolsaUsuarioRequest request)
+	{
+		EditaBolsaUsuarioResponse response = new EditaBolsaUsuarioResponse();
+		try
+		{
+			response = bolsaUsuarioServices.editaBolsaUsuario(codUsuario, idInstancia, request);
+			
+		}
+		catch (Exception ex)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se ha podido agregar actualizar bolsa usuario ");
+			System.out.println(ex.getMessage());
+			LOGGER.error(codError, ex);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/listaBolsaUsuario", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListaBolsaUsuarioResponse listaBolsaUsuario(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody ListaBolsaUsuarioRequest request)
+	{
+		ListaBolsaUsuarioResponse response = new ListaBolsaUsuarioResponse();
+		try
+		{
+			response = bolsaUsuarioServices.listaBolsaUsuario(codUsuario, idInstancia, request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Listado ok");
+			// response.setListarBolsaUsuario(response.getListarBolsaUsuario().s);
+		}
+		catch (Exception ex)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se ha podido Mostrar bolsa usuario ");
+			System.out.println(ex.getMessage());
+			LOGGER.error(codError, ex);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/tiempoBolsaDisponible", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public TiempoBolsaDisponibleResponse tiempoBolsaDisponible(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody TiempoBolsaDisponibleRequest request)
+	{
+		TiempoBolsaDisponibleResponse response = new TiempoBolsaDisponibleResponse();
+		try
+		{
+			response = bolsaUsuarioServices.tiempoBolsaDisponible(codUsuario, idInstancia, request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Minutos Disponibles ");
+			response.setResultado(response.getResultado());
+			response.setMinDisponible(response.getMinDisponible());
+
+		}
+		catch (Exception ex){
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se ha podido Mostrar bolsa usuario ");
+			System.out.println(ex.getMessage());
+			LOGGER.error(codError, ex);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/eliminaBolsaUsuario", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public EliminaBolsaUsuarioResponse eliminaBolsaUsuario(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody EliminaBolsaUsuarioRequest request)
+	{
+		EliminaBolsaUsuarioResponse response = new EliminaBolsaUsuarioResponse();
+		try
+		{
+			response = bolsaUsuarioServices.eliminaBolsaUsuario(codUsuario, idInstancia, request);
+			if (response.getEstado() == 1)
+			{
+				response.setMensaje("Bolsa Usuario Eliminado ");
+			}
+
+		}
+		catch (Exception ex)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se ha podido eliminar Bolsa Usuario ");
+			System.out.println(ex.getMessage());
+			LOGGER.error(codError, ex);
+		}
+		return response;
+	}
+}

@@ -1,0 +1,146 @@
+package pe.com.tintegro.controller;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import pe.com.tintegro.dao.util.Constantes;
+import pe.com.tintegro.dto.request.ActualizarConferenciaRequest;
+import pe.com.tintegro.dto.request.EliminarConferenciaRequest;
+import pe.com.tintegro.dto.request.InsertarConferenciaRequest;
+import pe.com.tintegro.dto.request.ListaConferenciaRequest;
+import pe.com.tintegro.dto.response.ActualizarConferenciaResponse;
+import pe.com.tintegro.dto.response.EliminarConferenciaResponse;
+import pe.com.tintegro.dto.response.InsertarConferenciaResponse;
+import pe.com.tintegro.dto.response.ListaConferenciaResponse;
+import pe.com.tintegro.services.ConferenciaServices;
+import pe.com.tintegro.services.util.Util;
+
+@RestController
+@RequestMapping("/conferencia")
+public class ConferenciaController
+{
+
+	protected transient final Logger LOGGER = Logger.getLogger(this.getClass());
+	@Resource(name = "conferenciaServices")
+	protected ConferenciaServices conferenciaServices;
+
+	@RequestMapping(value = "/insertarConferencia", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public InsertarConferenciaResponse insertaConferencia(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody InsertarConferenciaRequest request)
+	{
+		InsertarConferenciaResponse response = new InsertarConferenciaResponse();
+		try
+		{
+			response = conferenciaServices.insertarConferenciaResponse(codUsuario, idInstancia, request);
+
+			if (response.getResultado() == 1)
+			{
+				response.setMensaje("Conferencia Agregada");
+			}
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible Insertar Conferencia");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+
+		return response;
+	}
+
+	@RequestMapping(value = "/actualizarConferencia", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ActualizarConferenciaResponse actualizaConferencia(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody ActualizarConferenciaRequest request)
+	{
+		ActualizarConferenciaResponse response = new ActualizarConferenciaResponse();
+		try
+		{
+			response = conferenciaServices.actualizarConferenciaResponse(codUsuario, idInstancia, request);
+
+			if (response.getResultado() == 1)
+			{
+				response.setMensaje("Conferencia Actualizada");
+			}
+		
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible actualizar Conferencia");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+
+		return response;
+	}
+
+	@RequestMapping(value = "/eliminarConferencia", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public EliminarConferenciaResponse eliminarConferencia(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody EliminarConferenciaRequest request)
+	{
+		EliminarConferenciaResponse response = new EliminarConferenciaResponse();
+		try
+		{
+			response = conferenciaServices.eliminarConferenciaRequest(codUsuario, idInstancia, request);
+
+			if (response.getResultado() == 1)
+			{
+				response.setMensaje("Conferencia Eliminada");
+			}
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible eliminar Conferencia");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+
+		return response;
+	}
+
+	@RequestMapping(value = "/listarConferencia", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListaConferenciaResponse listaConferencia(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody ListaConferenciaRequest request)
+	{
+		ListaConferenciaResponse response = new ListaConferenciaResponse();
+		try
+		{
+			response = conferenciaServices.listaConferenciaResponse(codUsuario, idInstancia, request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Listado OK");
+
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible listar las conferencias");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+
+		return response;
+	}
+}

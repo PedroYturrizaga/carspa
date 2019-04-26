@@ -1,0 +1,144 @@
+package pe.com.tintegro.controller;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import pe.com.tintegro.dao.util.Constantes;
+import pe.com.tintegro.dto.request.ActualizarAudiosMohRequest;
+import pe.com.tintegro.dto.request.EliminarAudiosMohRequest;
+import pe.com.tintegro.dto.request.InsertarAudiosMohRequest;
+import pe.com.tintegro.dto.request.ListarAudioMohRequest;
+import pe.com.tintegro.dto.response.ActualizarAudioMohResponse;
+import pe.com.tintegro.dto.response.EliminarAudioMohReponse;
+import pe.com.tintegro.dto.response.InsertarAudioMohResponse;
+import pe.com.tintegro.dto.response.ListarAudioMohResponse;
+import pe.com.tintegro.services.AudioMohServices;
+import pe.com.tintegro.services.util.Util;
+
+@RestController
+@RequestMapping("/audioMoh")
+public class AudioMohController
+{
+	protected transient final Logger LOGGER = Logger.getLogger(this.getClass());
+	@Resource(name = "audioMohServices")
+	protected AudioMohServices audioMohServices;
+	//Listar Audio
+	@RequestMapping(value = "/listaAudioMoh", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListarAudioMohResponse listarAudioMoh(@RequestBody ListarAudioMohRequest request, @RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia)
+	{
+		ListarAudioMohResponse response = new ListarAudioMohResponse();
+
+		try
+		{
+			response = audioMohServices.listarMusicaOnHold(codUsuario, idInstancia, request);
+			String codError = Constantes.ESTADO_TRAMA_OK + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Se cargo la lista correctamente");
+		}
+		catch (Exception ex)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible mostrar los Audios");
+			System.out.println(ex.getMessage());
+			LOGGER.error(codError, ex);
+		}
+
+		return response;
+	}
+	
+	//Insertar Audio
+	@RequestMapping(value = "/insertarAudioMoh", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public InsertarAudioMohResponse insertarAudioMoh(@RequestBody InsertarAudiosMohRequest request, @RequestHeader("codUsuario") String codUsuario,
+
+	@RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia)
+	{
+
+		InsertarAudioMohResponse response = new InsertarAudioMohResponse();
+		try
+		{
+			response=audioMohServices.insertarAudiosMoh(codUsuario, idInstancia, request);
+			response.setIdRasult(response.getIdRasult());
+		
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo guardar el o los Audios");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+
+		}
+
+		return response;
+
+	}
+	
+	//Actualizar Audio
+	@RequestMapping(value = "/actualizarAudioMoh", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ActualizarAudioMohResponse actualizarAudioMoh(@RequestBody ActualizarAudiosMohRequest request, @RequestHeader("codUsuario") String codUsuario,
+			@RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia)
+	{
+
+		ActualizarAudioMohResponse response = new ActualizarAudioMohResponse();
+		try
+		{
+			response = audioMohServices.actualizarAudiosMoh(codUsuario, idInstancia, request);
+			response.setIdRasult(response.getIdRasult());
+		}
+		catch (Exception exception)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible actualizar el o los Audios");
+			System.out.println(exception.getMessage());
+			LOGGER.error(codError, exception);
+		}
+
+		return response;
+
+	}
+
+	//Eliminar Audio
+	@RequestMapping(value = "/eliminarAudioMoh", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public EliminarAudioMohReponse eliminarAudioMoh(@RequestBody EliminarAudiosMohRequest request, @RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia)
+	{
+		EliminarAudioMohReponse response = new EliminarAudioMohReponse();
+		try
+		{
+			response=audioMohServices.eliminarAudiosMoh(codUsuario, idInstancia, request);
+			response.setIdRasult(response.getIdRasult());
+		}
+		catch (Exception exception)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible eliminar el o los Audios");
+			System.out.println(exception.getMessage());
+			LOGGER.error(codError, exception);
+		}
+		return response;
+	}
+	
+}

@@ -1,0 +1,52 @@
+package pe.com.tintegro.controller;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import pe.com.tintegro.dao.util.Constantes;
+import pe.com.tintegro.dto.request.ListaCodecRequest;
+import pe.com.tintegro.dto.response.ListaCodecResponse;
+import pe.com.tintegro.services.CodecServices;
+import pe.com.tintegro.services.util.Util;
+
+@RestController
+@RequestMapping("/codec")
+public class CodecController
+{
+	
+	protected transient final Logger LOGGER = Logger.getLogger(this.getClass());
+	@Resource(name = "codecServices")
+	protected CodecServices codecServices;
+	
+	@RequestMapping(value = "/lista", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListaCodecResponse listaCodec(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia, @RequestBody  ListaCodecRequest request){
+		ListaCodecResponse response = new ListaCodecResponse();
+		try
+		{
+			response = codecServices.listaCodec(codUsuario, idInstancia, request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Listado ok");
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible listar Codec");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+
+		return response;
+	}
+}

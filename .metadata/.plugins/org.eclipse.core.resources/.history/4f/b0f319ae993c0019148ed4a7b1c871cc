@@ -1,0 +1,5 @@
+package pe.com.carspa.dao.util.copy;
+
+public class AppUtil {
+
+}

@@ -1,0 +1,133 @@
+package pe.com.tintegro.controller;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import pe.com.tintegro.dao.util.Constantes;
+import pe.com.tintegro.dto.request.ListarConsolidadoTiempoEsperaRequest;
+import pe.com.tintegro.dto.request.ListarLlamadasAbandonadasPorMinutoRequest;
+import pe.com.tintegro.dto.request.ListarLlamadasAtendidasAbandonadasRequest;
+import pe.com.tintegro.dto.request.ListarLlamadasEntrantesPorHoraRequest;
+import pe.com.tintegro.dto.response.ListarConsolidadoTiempoEsperaResponse;
+import pe.com.tintegro.dto.response.ListarLlamadasAbandonadasPorMinutoResponse;
+import pe.com.tintegro.dto.response.ListarLlamadasAtendidasAbandonadasResponse;
+import pe.com.tintegro.dto.response.ListarLlamadasEntrantesPorHoraResponse;
+import pe.com.tintegro.services.CallCenterReportesAgenteServices;
+import pe.com.tintegro.services.util.Util;
+
+@RestController
+@RequestMapping("/call-center-reporte")
+public class CallCenterReportesAgenteController
+{
+
+	protected transient final Logger LOGGER = Logger.getLogger(this.getClass());
+
+	@Resource(name = "callCenterReportesAgenteServices")
+	protected CallCenterReportesAgenteServices callCenterReportesAgenteServices;
+
+	@RequestMapping(value = "/lista-llamadas-atendidas-abandonadas", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListarLlamadasAtendidasAbandonadasResponse listarLlamadasAtendidasAbandonadas(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody ListarLlamadasAtendidasAbandonadasRequest request)
+	{
+		ListarLlamadasAtendidasAbandonadasResponse response = new ListarLlamadasAtendidasAbandonadasResponse();
+		try
+		{
+			response = callCenterReportesAgenteServices.listarLlamadasAtendidasYAbandonadas(codUsuario, idInstancia, request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Consulta de Llamadas Realizadas");
+		
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible mostrar las llamadas.");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/lista-llamada-entrante-por-hora", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListarLlamadasEntrantesPorHoraResponse listarLlamadasEntranteXHora(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody ListarLlamadasEntrantesPorHoraRequest request)
+	{
+		ListarLlamadasEntrantesPorHoraResponse response = new ListarLlamadasEntrantesPorHoraResponse();
+		try
+		{
+			response = callCenterReportesAgenteServices.listarLlamadasEntrantesPorHora(codUsuario, idInstancia, request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Consulta de Llamadas Realizadas");
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible mostrar las llamadas.");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/consolidado-tiempo-espera", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListarConsolidadoTiempoEsperaResponse listarConsolidadoTiempoEspera(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody ListarConsolidadoTiempoEsperaRequest request)
+	{
+		ListarConsolidadoTiempoEsperaResponse response = new ListarConsolidadoTiempoEsperaResponse();
+		try
+		{
+			response = callCenterReportesAgenteServices.listarConsolidadoTiempoEspera(codUsuario, idInstancia, request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Consulta de Llamadas Realizadas");
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible mostrar las llamadas.");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/consolidado-abandonadas-por-minuto", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListarLlamadasAbandonadasPorMinutoResponse listarConsolidadoAbandonadasXMinuto(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody ListarLlamadasAbandonadasPorMinutoRequest request)
+	{
+		ListarLlamadasAbandonadasPorMinutoResponse response = new ListarLlamadasAbandonadasPorMinutoResponse();
+		try
+		{
+			response = callCenterReportesAgenteServices.listarLlamadasAbandonadasPorMinuto(codUsuario, idInstancia, request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Consulta de Llamadas Realizadas");
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible mostrar las llamadas.");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+}

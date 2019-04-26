@@ -1,0 +1,142 @@
+package pe.com.tintegro.controller;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import pe.com.tintegro.dao.util.Constantes;
+import pe.com.tintegro.dto.request.ActualizarOpenVPNRequest;
+import pe.com.tintegro.dto.request.BuscarOpenVPNRequest;
+import pe.com.tintegro.dto.request.CambiarEstadoOpenVPNRequest;
+import pe.com.tintegro.dto.request.LeerEstadoOpenVPNRequest;
+import pe.com.tintegro.dto.request.LeerInstalacionOpenVPNRequest;
+import pe.com.tintegro.dto.response.ActualizarOpenVPNResponse;
+import pe.com.tintegro.dto.response.BuscarOpenVPNResponse;
+import pe.com.tintegro.dto.response.CambiarEstadoOpenVPNResponse;
+import pe.com.tintegro.dto.response.LeerEstadoOpenVPNResponse;
+import pe.com.tintegro.dto.response.LeerInstalacionOpenVPNResponse;
+import pe.com.tintegro.services.OpenVPNServices;
+import pe.com.tintegro.services.util.Util;
+
+@RestController
+@RequestMapping("/openVPN")
+public class OpenVPNController {
+	protected transient final Logger LOGGER = Logger.getLogger(this.getClass());
+
+	@Resource(name = "openVPNServices")
+	protected OpenVPNServices openVPNServices;
+	
+	@RequestMapping(value = "/buscar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public BuscarOpenVPNResponse buscarOpenVPN(@RequestBody BuscarOpenVPNRequest request, @RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia)
+	{
+		BuscarOpenVPNResponse response = new BuscarOpenVPNResponse();
+		try
+		{
+			response = openVPNServices.buscarOpenVPN(request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("busqueda realizada");
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible mostrar el OpenVPN");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+	
+	@RequestMapping(value = "/actualizar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ActualizarOpenVPNResponse actualizarOpenVPN(@RequestBody ActualizarOpenVPNRequest request, @RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia)
+	{
+		ActualizarOpenVPNResponse response = new ActualizarOpenVPNResponse();
+		try
+		{
+			response = openVPNServices.actualizarOpenVPN(codUsuario, idInstancia, request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("actualizacion realizada");
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible la actualiacion del OpenVPN");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/leerEstado", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public LeerEstadoOpenVPNResponse LeerEstadoOpenVPN(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia,LeerEstadoOpenVPNRequest request) throws Exception
+	{
+		LeerEstadoOpenVPNResponse response=new LeerEstadoOpenVPNResponse();
+		try
+		{
+		response=openVPNServices.leerEstadoOpenVPN(codUsuario, idInstancia, request);
+		}
+		catch (Exception exception)
+		{
+			System.out.println(exception.getMessage());
+		}
+
+		return response;
+
+	}
+
+	@RequestMapping(value = "/cambiarEstado", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public CambiarEstadoOpenVPNResponse cambiarEstadoOpenVPN(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody CambiarEstadoOpenVPNRequest request) throws Exception
+			
+	{
+		CambiarEstadoOpenVPNResponse response=new CambiarEstadoOpenVPNResponse();
+		try
+		{
+			response =openVPNServices.cambiarEstadoOpenVPN(codUsuario, idInstancia, request);
+		}
+		catch (Exception exception)
+		{
+			System.out.println(exception.getMessage());
+		}
+
+		return response;
+
+	}
+
+	@RequestMapping(value = "/leerInstalacion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public LeerInstalacionOpenVPNResponse LeerInstalacionOpenVPN(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia,LeerInstalacionOpenVPNRequest request) throws Exception
+	{
+		LeerInstalacionOpenVPNResponse response=new LeerInstalacionOpenVPNResponse();
+		try
+		{
+		response=openVPNServices.leerInstalacionOpenVPN(codUsuario, idInstancia, request);
+		}
+		catch (Exception exception)
+		{
+			System.out.println(exception.getMessage());
+		}
+
+		return response;
+
+	}
+}

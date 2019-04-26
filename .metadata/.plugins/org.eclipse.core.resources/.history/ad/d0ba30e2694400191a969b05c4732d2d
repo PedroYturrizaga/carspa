@@ -1,0 +1,60 @@
+package pe.com.carspa.dominio;
+
+public class Usuario {
+
+	private Integer id_usuario;
+	private String nom_usuario;
+	private String ap_mat_usuario;
+	private String ap_pat_usuario;
+	private String tipo_documento;
+	private String nro_documento;
+
+	public Integer getId_usuario() {
+		return id_usuario;
+	}
+
+	public void setId_usuario(Integer id_usuario) {
+		this.id_usuario = id_usuario;
+	}
+
+	public String getNom_usuario() {
+		return nom_usuario;
+	}
+
+	public void setNom_usuario(String nom_usuario) {
+		this.nom_usuario = nom_usuario;
+	}
+
+	public String getAp_mat_usuario() {
+		return ap_mat_usuario;
+	}
+
+	public void setAp_mat_usuario(String ap_mat_usuario) {
+		this.ap_mat_usuario = ap_mat_usuario;
+	}
+
+	public String getAp_pat_usuario() {
+		return ap_pat_usuario;
+	}
+
+	public void setAp_pat_usuario(String ap_pat_usuario) {
+		this.ap_pat_usuario = ap_pat_usuario;
+	}
+
+	public String getTipo_documento() {
+		return tipo_documento;
+	}
+
+	public void setTipo_documento(String tipo_documento) {
+		this.tipo_documento = tipo_documento;
+	}
+
+	public String getNro_documento() {
+		return nro_documento;
+	}
+
+	public void setNro_documento(String nro_documento) {
+		this.nro_documento = nro_documento;
+	}
+
+}

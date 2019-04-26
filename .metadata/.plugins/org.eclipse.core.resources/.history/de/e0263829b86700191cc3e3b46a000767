@@ -1,0 +1,229 @@
+package pe.com.tintegro.controller;
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import pe.com.tintegro.dao.util.Constantes;
+import pe.com.tintegro.dominio.IaxConfirmacion;
+import pe.com.tintegro.dominio.IaxTrunk;
+import pe.com.tintegro.dto.request.ActualizaIaxTrunkRequest;
+import pe.com.tintegro.dto.request.EliminaIaxTrunkRequest;
+import pe.com.tintegro.dto.request.InsertaIaxTrunkRequest;
+import pe.com.tintegro.dto.request.ListaIaxTrunkRequest;
+import pe.com.tintegro.dto.request.ListarCentralesNoDisponiblesRequest;
+import pe.com.tintegro.dto.request.ListarIaxPassRequest;
+import pe.com.tintegro.dto.response.ActualizaIaxTrunkResponse;
+import pe.com.tintegro.dto.response.EliminaIaxTrunkResponse;
+import pe.com.tintegro.dto.response.InsertaIaxTrunkResponse;
+import pe.com.tintegro.dto.response.ListaIaxTrunkResponse;
+import pe.com.tintegro.dto.response.ListarCentralesNoDisponiblesResponse;
+import pe.com.tintegro.dto.response.ListarIaxPassResponse;
+import pe.com.tintegro.dto.response.ViewCodeIaxTrunkResponse;
+import pe.com.tintegro.services.IaxTrunkServices;
+import pe.com.tintegro.services.util.Util;
+
+@RestController
+@RequestMapping("/iaxTrunk")
+public class IaxTrunkController
+{
+	protected transient final Logger LOGGER = Logger.getLogger(this.getClass());
+	@Resource(name = "iaxTrunkServices")
+	protected IaxTrunkServices iaxTrunkServices;
+
+	@RequestMapping(value = "/insertaIaxTrunk", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public InsertaIaxTrunkResponse insertaIaxTrunk(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody InsertaIaxTrunkRequest request)
+	{
+		InsertaIaxTrunkResponse response = new InsertaIaxTrunkResponse();
+		try
+		{
+			response = iaxTrunkServices.insertaIaxTrunk(codUsuario, idInstancia, request);
+
+			if (response.getEstado() == 1)
+			{
+				response.setMensaje("Registro de troncal exitoso");
+			}else{
+				response.setMensaje(response.getNomMensaje());
+			}
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible Insertar IAK Trunk");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/actualizaIaxTrunk", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ActualizaIaxTrunkResponse actualizaIaxTrunk(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody ActualizaIaxTrunkRequest request)
+	{
+		ActualizaIaxTrunkResponse response = new ActualizaIaxTrunkResponse();
+		try
+		{
+			response = iaxTrunkServices.actualizaIaxTrunk(codUsuario, idInstancia, request);
+
+			if (response.getEstado() == 1)
+			{
+				response.setMensaje("Registro de troncal exitoso");
+			}else{
+				response.setMensaje(response.getNomMensaje());
+			}
+
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible actualizar IAK Trunk");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/eliminaIaxTrunk", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public EliminaIaxTrunkResponse eliminaIaxTrunk(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody EliminaIaxTrunkRequest request)
+	{
+		EliminaIaxTrunkResponse response = new EliminaIaxTrunkResponse();
+		try
+		{
+			response = iaxTrunkServices.eliminaIaxTrunk(codUsuario, idInstancia, request);
+			if (response.getResultado() == 1)
+			{
+				response.setMensaje("IAK Trunk Eliminado");
+			}
+
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible Eliminar IAK Trunk");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/listaIaxTrunk", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListaIaxTrunkResponse listaIaxTrunk(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody ListaIaxTrunkRequest request)
+	{
+		ListaIaxTrunkResponse response = new ListaIaxTrunkResponse();
+		try
+		{
+			response = iaxTrunkServices.listaIaxTrunk(codUsuario, idInstancia, request);
+			for (IaxTrunk iaxTrunk : response.getListaIaxTrunk())
+			{
+				iaxTrunk.setCentralInterna(null);
+			}
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Listado ok");
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible Listar IAK Trunk");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/viewCodeIaxTrunk", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ViewCodeIaxTrunkResponse viewCodeIaxTrunk(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody ListaIaxTrunkRequest request)
+	{
+		ViewCodeIaxTrunkResponse response = new ViewCodeIaxTrunkResponse();
+		try
+		{
+			response = iaxTrunkServices.viewCodeIaxTrunk(codUsuario, idInstancia, request);
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible Listar IAK Trunk");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/listaCentralesNoDisponibles", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListarCentralesNoDisponiblesResponse listaCentralesNoDisponibles(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody ListarCentralesNoDisponiblesRequest request)
+	{
+		ListarCentralesNoDisponiblesResponse response = new ListarCentralesNoDisponiblesResponse();
+		try
+		{
+			response = iaxTrunkServices.listaCentralesNoDisponibles(codUsuario, idInstancia, request);
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Listado ok");
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible Listar Centrales de IAK Trunk");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+	@RequestMapping(value = "/listarIaxPass", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListarIaxPassResponse listaIaxPass(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token, @RequestHeader("idInstancia") String idInstancia,
+			@RequestBody ListarIaxPassRequest request)
+	{
+		ListarIaxPassResponse response = new ListarIaxPassResponse();
+		try
+		{
+			response = iaxTrunkServices.listarIaxpass(request);
+			for (IaxConfirmacion iaxTrunk : response.getConfirList())
+			{
+				System.out.println("Password:"+iaxTrunk.getSecretIax());
+				System.out.println("Is linked:"+iaxTrunk.isLinked());
+			}
+			response.setEstado(Constantes.ESTADO_TRAMA_OK);
+			response.setMensaje("Listado ok");
+		}
+		catch (Exception e)
+		{
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No ha sido posible Listar IaxPass Trunk");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+}

@@ -1,0 +1,218 @@
+package pe.com.tintegro.controller;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import pe.com.tintegro.dao.util.Constantes;
+import pe.com.tintegro.dto.request.*;
+import pe.com.tintegro.dto.response.*;
+import pe.com.tintegro.services.MusicaPerifoneoServices;
+import pe.com.tintegro.services.util.Util;
+
+@RestController
+@RequestMapping("/musicaPerifoneo")
+public class MusicaPerifoneoController {
+    
+	protected transient final Logger LOGGER = Logger.getLogger(this.getClass());
+
+	@Resource(name="musicaPerifoneoServices")
+	protected MusicaPerifoneoServices musicaPerifoneoServices;
+	
+	@RequestMapping(value = "/inserta", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public InsertarMusicaPerifoneoResponse insertarMusicaPerifoneo(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody InsertarMusicaPerifoneoRequest request){
+		InsertarMusicaPerifoneoResponse response=new InsertarMusicaPerifoneoResponse();
+		try {
+			response = musicaPerifoneoServices.insertarMusicaPerifoneoServices(codUsuario, idInstancia, request);
+		} catch (Exception e) {
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo registrar la musica de perifoneo");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		
+		return response;
+	}
+	
+	@RequestMapping(value = "/lista", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ListarMusicaPerifoneoResponse listarPerifoneo(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody ListarMusicaPerifoneoRequest request){
+		ListarMusicaPerifoneoResponse response = new ListarMusicaPerifoneoResponse();
+		
+		try {
+			response = musicaPerifoneoServices.listarMusicaPerifoneoServices(codUsuario, idInstancia, request);
+		} catch (Exception e) {
+			
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo listar la musica de perifoneo");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		
+		return response;
+	}
+	
+	@RequestMapping(value = "/cambio", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public CambiarPosicionMusicaPerifoneoResponse cambiarMusicaPerifoneo(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody CambiarPosicionMusicaPerifoneoRequest request){
+		CambiarPosicionMusicaPerifoneoResponse response = new CambiarPosicionMusicaPerifoneoResponse();
+		try {
+			response = musicaPerifoneoServices.cambiarPosicionMusicaPerifoneoServices(codUsuario, idInstancia, request);
+		} catch (Exception e) {
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo cambiar la posicion la musica de perifoneo");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		
+		
+		return response;
+	}
+	@RequestMapping(value = "/elimina", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public EliminarMusicaPerifoneoResponse eliminarMusicaPerifoneo (@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody EliminarMusicaPerifoneoRequest request){
+		EliminarMusicaPerifoneoResponse response = new EliminarMusicaPerifoneoResponse();
+		try {
+			response = musicaPerifoneoServices.eliminarMusicaPerifoneoServices(codUsuario, idInstancia, request);
+		} catch (Exception e) {
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo eliminar musica de perifoneo");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/cambiaEstado", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public CambiarEstadoMusicaPerifoneoResponse cambiarEstadoMusicaPerifoneo (@RequestHeader("codUsuario") String codUsuario, @RequestHeader("token") String token,
+			@RequestHeader("idInstancia") String idInstancia, @RequestBody CambiarEstadoMusicaPerifoneoRequest request){
+		CambiarEstadoMusicaPerifoneoResponse response = new CambiarEstadoMusicaPerifoneoResponse();
+		try {
+			response = musicaPerifoneoServices.cambiarEstadoMusicaPerifoneoServices(codUsuario, idInstancia, request);
+		} catch (Exception e) {
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo cambiar estado musica de perifoneo");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+	
+	@RequestMapping(value = "/cambiaEstadoAmbiental", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public CambiarEstadoMusicaPerifoneoAmbientalResponse cambiarEstadoMusicaPerifoneoAmbiental(@RequestHeader("codUsuario")  String codUsuario, @RequestHeader("idInstancia") String idInstancia, @RequestBody CambiarEstadoMusicaPerifoneoAmbientalRequest request) {
+		CambiarEstadoMusicaPerifoneoAmbientalResponse response = new CambiarEstadoMusicaPerifoneoAmbientalResponse();
+		try {
+			response = musicaPerifoneoServices.cambiarEstadoMusicaPerifoneoAmbientalServices(codUsuario, idInstancia, request);
+		} catch (Exception e) {
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo cambiar estado musica de perifoneo ambiental");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		
+		return response;
+	}
+	
+	@RequestMapping(value = "/leeEstadoAmbiental", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public LeerEstadoMusicaPerifoneoAmbientalResponse leerEstadoMusicaPerifoneoAmbiental (@RequestHeader("codUsuario") String codUsuario,@RequestHeader("idInstancia") String idInstancia, @RequestBody LeerEstadoMusicaPerifoneoAmbientalRequest request) {
+		LeerEstadoMusicaPerifoneoAmbientalResponse response = new LeerEstadoMusicaPerifoneoAmbientalResponse();
+		try {
+			response = musicaPerifoneoServices.leerEstadoMusicaPerifoneoAmbientalServices(codUsuario, idInstancia, request);
+		} catch (Exception e) {
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo leer estado musica de perifoneo ambiental");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		
+		return response;
+    }
+
+	@RequestMapping(value = "/switchRadio", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public SwitchRadioResponse switchRadio(@RequestHeader("codUsuario") String codUsuario,@RequestHeader("idInstancia") String idInstancia, @RequestBody SwitchRadioRequest request){
+		SwitchRadioResponse response = new SwitchRadioResponse();
+		try {
+			response = musicaPerifoneoServices.switchRadioServices(codUsuario, idInstancia, request);
+		} catch (Exception e) {
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo cambiar estado de la Radio");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		return response;
+	}
+	
+	@RequestMapping(value = "/verModoPerifoneo", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public VerModoPerifoneoResponse verModoPerifoneo(@RequestHeader("codUsuario") String codUsuario, @RequestHeader("idInstancia") String idInstancia){
+		VerModoPerifoneoResponse response = new VerModoPerifoneoResponse();
+		try {
+			response = musicaPerifoneoServices.verModoPerifoneoServices(codUsuario, idInstancia);
+		} catch (Exception e) {
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo leer el modo perifoneo");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+			// TODO: handle exception
+		}
+		
+		return response ;
+	}
+	
+	@RequestMapping(value = "/cambiaModoPerifoneo", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public CambiarModoPerifoneoResponse cambiarModoPerifoneoServices(
+			@RequestHeader("codUsuario") String codUsuario,@RequestHeader("idInstancia") String idInstancia,
+			@RequestBody CambiarModoPerifoneoRequest request){
+		CambiarModoPerifoneoResponse response = new CambiarModoPerifoneoResponse();
+		try {
+			response = musicaPerifoneoServices.cambiarModoPerifoneoServices(codUsuario, idInstancia, request);
+		} catch (Exception e) {
+			// TODO: handle exception
+			response.setEstado(Constantes.ESTADO_TRAMA_ERROR_APP);
+			String codError = Constantes.ID_ERROR_APP + Util.getCodigoErrorByDate();
+			response.setCodError(codError);
+			response.setMensaje("No se pudo cambiar el modo de perifoneo");
+			System.out.println(e.getMessage());
+			LOGGER.error(codError, e);
+		}
+		
+		return response;
+	}
+	
+}
