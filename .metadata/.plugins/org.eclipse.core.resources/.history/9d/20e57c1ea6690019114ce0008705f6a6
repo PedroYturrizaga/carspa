@@ -1,0 +1,5 @@
+package pe.com.carspa.util;
+
+public class MensajeError {
+
+}

@@ -1,0 +1,66 @@
+package pe.com.carspa.dao.impl;
+
+import javax.xml.ws.Response;
+
+import pe.com.carspa.connection.PostgreSQL;
+import pe.com.carspa.dao.ProveedorDAO;
+import pe.com.carspa.dto.request.ActualizarProveedorRequest;
+import pe.com.carspa.dto.request.EliminarProveedorRequest;
+import pe.com.carspa.dto.request.InsertarProveedorRequest;
+import pe.com.carspa.dto.request.ListarProveedorRequest;
+import pe.com.carspa.dto.response.ActualizarProveedorResponse;
+import pe.com.carspa.dto.response.EliminarProveedorResponse;
+import pe.com.carspa.dto.response.InsertarProveedorResponse;
+import pe.com.carspa.dto.response.ListarProveedorResponse;
+
+public class ProveedorDAOImpl implements ProveedorDAO {
+
+	@Override
+	public InsertarProveedorResponse insertProveedor(InsertarProveedorRequest request) throws Exception {
+		InsertarProveedorResponse response = new InsertarProveedorResponse();
+		PostgreSQL db = new PostgreSQL();
+		db.conectar(ip);
+		try {
+			String storedProcedure = "esquema.funcion";
+			Object[][] params = { 
+						{ request.getProveedor().getContacto(), String.class },
+						{ request.getProveedor().getDireccion(), String.class },
+						{ request.getProveedor().getEmail(), String.class },
+						{ request.getProveedor().getIdTipoPago(), Integer.class },
+						{ request.getProveedor().getNombreProveedor(), String.class },
+						{ request.getProveedor().getTelefono(), String.class }, 
+					};
+
+			Response<Integer> responseInteger = BaseDao.baseData(storedProcedure, params, db.con, Integer.class, null);
+			if (responseInteger.getCodigo() != Constantes.ESTADO_TRAMA_OK) {
+				throw responseInteger.getException();
+			} else {
+				response.setMensaje(MensajeError.OK);
+				response.setInsertado(responseInteger.getData().get(0));
+			}
+			response.setEstado(responseInteger.getCodigo());
+		} finally {
+			db.cerrar();
+		}
+		return response;
+	}
+
+	@Override
+	public EliminarProveedorResponse deleteProveedor(EliminarProveedorRequest request) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ActualizarProveedorResponse updateProveedor(ActualizarProveedorRequest request) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ListarProveedorResponse listarMateriales(ListarProveedorRequest request) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
