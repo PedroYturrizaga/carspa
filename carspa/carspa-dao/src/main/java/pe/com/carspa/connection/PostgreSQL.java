@@ -9,7 +9,7 @@ public class PostgreSQL
 	private static String user = "postgres";
 	private static String password = "postgres";
 	private static String port = "5432";
-	private static String database = "carwash";
+	private static String database = "DB_SGC-CARSPA";
 
 	public Connection conectar(String IP) throws Exception
 	{
