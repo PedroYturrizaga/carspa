@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;carspa-dao/src/main/resources/pe/com/tintegro&apos; to &apos;carspa&apos;" description="Rename resource &apos;tintegro&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/resources/pe/com/tintegro" name="carspa" stamp="1556426957792" updateReferences="true"/>
+</session>

@@ -1,7 +1,0 @@
-package pe.com.carspa.dto.request;
-
-public class EliminarUsuarioRequest {
-
-	private Integer idUsuario;
-	
-}

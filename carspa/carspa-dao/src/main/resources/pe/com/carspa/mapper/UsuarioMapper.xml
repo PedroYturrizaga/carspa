@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.com.carspa.mapper.UsuarioMapper">
+	<resultMap id="CRUDMap" type="pe.com.carspa.dominio.Usuario">
+		<result property="result" column="id_resulta" />
+		<result property="mensaje" column="no_mensaje" />
+	</resultMap>
+	
+	<resultMap id="listaUsuarioEstadarMap" type="pe.com.carspa.dominio.Usuario">
+		<result property="idUsuario" column="id_usuario" />
+		<result property="noLogin" column="no_login" />
+		<result property="noNombre" column="no_nombre" />
+		<result property="noApellido" column="no_apellido" />
+		<result property="noApellido" column="no_apelli" />
+		<result property="email" column="no_email" />
+		<result property="noProfe" column="no_profesion" />
+		<result property="ilActivo" column="il_activo" />
+		<result property="feCreacion" column="fe_creacion" />
+		<result property="ilAccountNonWExpired" column="il_account_non_expired" />
+		<result property="ilCredentialNonExpired" column="il_credential_non_expired" />
+		<result property="ilAccountNonLocked" column="il_account_non_locked" />
+		<result property="noRol" column="no_rol"/>
+		<result property="idRol" column="id_rol"/>
+		<result property="idInstancia" column="id_instancia"/>
+		<result property="noInstancia" column="no_instancua"/>
+		<result property="idCliente" column="id_cliente"/>
+		<result property="noCliente" column="no_cliente"/>	
+		<result property="idTipoRol" column="id_tipo_rol"/>
+		<result property="noNewPassword" column="no_new_password"/>
+		<result property="noToken" column="no_token"/>
+	</resultMap>
+	
+	<select id="validarUsuarioLogin" resultMap="CRUDMap">
+		select * from
+		oauth.fn_validar_login_usuario(#{pNoLogin})
+	</select>
+	
+	<select id="insertarUsuarioEstandar" resultMap="CRUDMap">
+		select * from
+		oauth.fn_insertar_usuario_standar(#{pNoLogin},#{pNoPasswo},#{pNoNombre},#{pNoApelli},#{pNoEmail},#{pNoProfe},#{pIdRol},#{pNoLoginCreador},#{pIdInstancia})
+	</select>
+	
+	<select id="listarUsuarioEstandar" resultMap="listaUsuarioEstadarMap">
+		select * from
+		oauth.fn_listar_usuario_standar(#{pNoLoginCreador}, #{pIdInstancia},#{pIdUsuario},#{pTiOpera})
+	</select>
+	<select id="listarUsuarioPorCodigo" resultMap="listaUsuarioEstadarMap">
+		select * from
+		oauth.fn_listar_usuario_codigo(#{pCodUsuario},#{pIdUsuario})
+	</select>
+	<select id="eliminarUsuarioEstandar" resultMap="CRUDMap">
+		select * from
+		oauth.fn_eliminar_usuario_standar(#{pIdUsuario},
+		#{pNoLoginCreador},
+		#{pIdInstancia})
+	</select>
+	<select id="actualizarPassword" resultMap="CRUDMap">
+		select * from
+		oauth.fn_actualizar_contrasena(
+		#{pNewPassword},
+		#{pCodUsuario},
+		#{pConfirmacion},
+		#{pToken})
+	</select>
+	<select id="actualizarUsuarioEstandar" resultMap="CRUDMap">
+		select * from
+		oauth.fn_actualizar_usuario_standar(
+		#{pIdUsuario},
+		#{pNoPasswo},
+		#{pNoNombre},
+		#{pNoApelli},
+		#{pNoEmail},
+		#{pNoProfe},
+		#{pIdRol},
+		#{pNoLoginCreador},
+		#{pIdInstancia})
+	</select>
+</mapper>

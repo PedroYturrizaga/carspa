@@ -1,8 +1,0 @@
-package pe.com.carspa.dto.request;
-
-import pe.com.carspa.dominio.Usuario;
-
-public class InsertarUsuarioRequest {
-
-	private Usuario usuario;
-}
