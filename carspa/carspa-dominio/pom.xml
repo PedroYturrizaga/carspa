@@ -7,7 +7,7 @@
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 	<parent>
-		<groupId>pe.com.carwash</groupId>
+		<groupId>pe.com.carspa</groupId>
 		<artifactId>carspa</artifactId>
 		<version>1.0.0</version>
 	</parent>

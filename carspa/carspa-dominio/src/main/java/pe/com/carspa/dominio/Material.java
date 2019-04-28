@@ -28,7 +28,8 @@ public class Material implements Serializable{
 	  private String descripcion;
 	  private Integer idProveedor ;
 	  private String nombreProveedor;
-	  
+	  private Integer nuTotalReg;
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -124,6 +125,12 @@ public class Material implements Serializable{
 	}
 	public void setStock(Double stock) {
 		this.stock = stock;
+	}
+	public Integer getNuTotalReg() {
+		return nuTotalReg;
+	}
+	public void setNuTotalReg(Integer nuTotalReg) {
+		this.nuTotalReg = nuTotalReg;
 	}
 
 }

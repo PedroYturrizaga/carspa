@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.com.carspa.mapper.MaterialMapper">
+	<resultMap id="CRUDMap" type="pe.com.carspa.dominio.Confirmacion">
+		<result property="id" column="id" />
+		<result property="mensaje" column="no_respuesta" />
+	</resultMap>
+	
+	<resultMap id="listaMaterialesMap" type="pe.com.carspa.dominio.Material">
+		<result property="idMaterial" column="id_material" />
+		<result property="stockMaximo" column="stock_maximo" />
+		<result property="precioVenta" column="precio_venta" />
+		<result property="stockMinimo" column="stock_minimo" />
+		<result property="puntoPedido" column="punto_pedido" />
+		<result property="fechaRegistro" column="fecha_registro" />
+		<result property="fechaActualizacion" column="fecha_actualizacion" />
+		<result property="estado" column="estado" />
+		<result property="codigo" column="codigo" />
+		<result property="stock" column="stock" />
+		<result property="nombre" column="nombre" />
+		<result property="marca" column="marca" />
+		<result property="precioCompra" column="precio_compra"/>
+		<result property="descripcion" column="descripcion"/>
+		<result property="idProveedor" column="id_proveedor"/>
+		<result property="nombreProveedor" column="proveedor"/>
+		<result property="nuTotalReg" column="nu_total_reg"/>
+		
+
+	</resultMap>
+	
+	<select id="activarMaterial" resultMap="CRUDMap">
+		select * from
+		logistica.fn_lo_activar_material(#{idMaterial})
+	</select>
+	
+	<select id="desactivarMaterial" resultMap="CRUDMap">
+		select * from
+		logistica.fn_lo_desactivar_maquinaria(#{idMaterial})
+	</select>
+	
+	<select id="listarMateriales" resultMap="listaMaterialesMap">
+		select * from
+		logistica.fn_listar_usuario_standar(#{nombre}, #{estado}, #{nuPagina}, #{nuRegisMostrar})
+	</select>
+	<select id="insertMaterial" resultMap="CRUDMap">
+		select * from
+		logistica.fn_lo_insert_material(
+		#{codigo},
+		#{stockMaximo},
+		#{stockMinimo},
+		#{puntoPedido},
+		#{precioVenta},
+		#{nombre},
+		#{marca},
+		#{stock},
+		#{precioCompra},
+		#{descripcion},
+		#{idProveedor}
+	</select>
+	<select id="updateMaterial" resultMap="CRUDMap">
+		select * from
+		logistica.fn_lo_update_material(
+		#{idMaterial},
+		#{stockMaximo},
+		#{stockMinimo},
+		#{puntoPedido},
+		#{precioVenta},
+		#{nombre},
+		#{marca},
+		#{stock},
+		#{precioCompra},
+		#{descripcion},
+		#{idProveedor}
+	</select>
+
+</mapper>

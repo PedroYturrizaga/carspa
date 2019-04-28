@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>pe.com.carwash</groupId>
+	<groupId>pe.com.carspa</groupId>
 	<artifactId>carspa</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>

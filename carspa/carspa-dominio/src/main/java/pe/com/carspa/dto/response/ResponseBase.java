@@ -1,7 +1,10 @@
 package pe.com.carspa.dto.response;
 
-public class ResponseBase {
+import pe.com.carspa.dominio.Confirmacion;
 
+public class ResponseBase {
+	
+	private Confirmacion confirmacion;
 	private Integer estado;
 	private String mensaje;
 	private String codError;
@@ -28,6 +31,14 @@ public class ResponseBase {
 
 	public void setCodError(String codError) {
 		this.codError = codError;
+	}
+
+	public Confirmacion getConfirmacion() {
+		return confirmacion;
+	}
+
+	public void setConfirmacion(Confirmacion confirmacion) {
+		this.confirmacion = confirmacion;
 	}
 
 }
