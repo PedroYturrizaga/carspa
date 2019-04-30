@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import pe.com.carspa.dominio.Confirmacion;
 import pe.com.carspa.dominio.Material;
+import pe.com.carspa.dominio.Proveedor;
 
 
 public interface MaterialMapper {
@@ -18,6 +19,7 @@ public interface MaterialMapper {
 			@Param("estado")Integer estado,
 			@Param("nuPagina")Integer nuPagina,
 			@Param("nuRegisMostrar")Integer nuRegisMostrar) throws Exception;
+	public List<Proveedor> comboProveedor()throws Exception;
 	public Confirmacion insertMaterial(
 			@Param("codigo")String codigo,
 			@Param("stockMaximo")Double stockMaximo,

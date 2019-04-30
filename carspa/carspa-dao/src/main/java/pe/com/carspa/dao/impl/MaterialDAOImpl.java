@@ -8,10 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pe.com.carspa.dao.MaterialDAO;
 import pe.com.carspa.dominio.Confirmacion;
+import pe.com.carspa.dominio.Proveedor;
 import pe.com.carspa.dto.request.EliminarMaterialRequest;
 import pe.com.carspa.dto.request.InsertarActualizarMaterialRequest;
 import pe.com.carspa.dto.request.ListarMaterialRequest;
+import pe.com.carspa.dto.request.ListarProveedorRequest;
 import pe.com.carspa.dto.response.ListarMaterialResponse;
+import pe.com.carspa.dto.response.ListarProveedorResponse;
 import pe.com.carspa.dto.response.ResponseBase;
 import pe.com.carspa.mapper.MaterialMapper;
 import pe.com.carspa.dominio.Material;
@@ -68,6 +71,15 @@ public class MaterialDAOImpl implements MaterialDAO{
 		ListarMaterialResponse response = new ListarMaterialResponse();
 		List<Material>listaMateriales=materialMapper.listarMateriales(request.getNombre(), request.getEstado(), request.getNuPagina(), request.getNuRegisMostrar());
 		response.setMateriales(listaMateriales);
+		return response;
+	}
+
+	@Override
+	public ListarProveedorResponse comboProveedor(ListarProveedorRequest request)
+			throws Exception {
+		ListarProveedorResponse response = new ListarProveedorResponse();
+		List<Proveedor> proveedores=materialMapper.comboProveedor();
+		response.setProveedor(proveedores);
 		return response;
 	}
 

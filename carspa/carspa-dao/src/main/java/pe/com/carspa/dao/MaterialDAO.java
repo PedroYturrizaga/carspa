@@ -3,7 +3,9 @@ package pe.com.carspa.dao;
 import pe.com.carspa.dto.request.EliminarMaterialRequest;
 import pe.com.carspa.dto.request.InsertarActualizarMaterialRequest;
 import pe.com.carspa.dto.request.ListarMaterialRequest;
+import pe.com.carspa.dto.request.ListarProveedorRequest;
 import pe.com.carspa.dto.response.ListarMaterialResponse;
+import pe.com.carspa.dto.response.ListarProveedorResponse;
 import pe.com.carspa.dto.response.ResponseBase;
 
 public interface MaterialDAO {
@@ -13,6 +15,7 @@ public interface MaterialDAO {
 	public ResponseBase insertMaterial(InsertarActualizarMaterialRequest request)throws Exception;
 	public ResponseBase updateMaterial(InsertarActualizarMaterialRequest request)throws Exception;
 	public ListarMaterialResponse listarMateriales(ListarMaterialRequest request)throws Exception;
+	public ListarProveedorResponse comboProveedor(ListarProveedorRequest request)throws Exception;
 
 
 

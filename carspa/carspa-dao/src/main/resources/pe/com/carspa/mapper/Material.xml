@@ -26,8 +26,11 @@
 		<result property="idProveedor" column="id_proveedor"/>
 		<result property="nombreProveedor" column="proveedor"/>
 		<result property="nuTotalReg" column="nu_total_reg"/>
-		
-
+	</resultMap>
+	
+		<resultMap id="comboProveedorMap" type="pe.com.carspa.dominio.Proveedor">
+		<result property="idProveedor" column="id" />
+		<result property="nombreProveedor" column="no_descripcion" />
 	</resultMap>
 	
 	<select id="activarMaterial" resultMap="CRUDMap">
@@ -40,9 +43,14 @@
 		logistica.fn_lo_desactivar_maquinaria(#{idMaterial})
 	</select>
 	
+		<select id="comboProveedor" resultMap="comboProveedorMap">
+		select * from
+		logistica.fn_lo_combo_proveedor()
+	</select>
+	
 	<select id="listarMateriales" resultMap="listaMaterialesMap">
 		select * from
-		logistica.fn_listar_usuario_standar(#{nombre}, #{estado}, #{nuPagina}, #{nuRegisMostrar})
+		logistica.fn_lo_select_materiales(#{nombre}, #{estado}, #{nuPagina}, #{nuRegisMostrar})
 	</select>
 	<select id="insertMaterial" resultMap="CRUDMap">
 		select * from
