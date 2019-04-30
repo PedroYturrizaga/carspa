@@ -1,21 +1,23 @@
 package pe.com.carspa.controller;
 
-import javax.servlet.http.HttpServletRequest;
-//import pe.com.carspa.services.MaterialService;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pe.com.carspa.services.MaterialService;
+
 @RestController
 @RequestMapping("/material")
-//@Api(value = "materiales")
 public class MaterialController {
-	@Autowired
-	private HttpServletRequest servletRequest;
+	protected transient final Logger LOGGER = Logger.getLogger(MaterialController.class);
+//	@Autowired
+//	private HttpServletRequest servletRequest;
 
 //	@Autowired
 //	private APIProperties apiProperties;
 
-//	@Autowired
-//	private MaterialService materialService;
+	@Resource(name = "materialService")
+	protected MaterialService materialService;
 }

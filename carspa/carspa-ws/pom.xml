@@ -15,7 +15,7 @@
 		<org.springframework.version>4.2.5.RELEASE</org.springframework.version>
 		<jackson.version>2.7.3</jackson.version>
 	</properties>
-<dependencies>
+	<dependencies>
 		<!--SID -->
 		<dependency>
 			<groupId>org.springframework</groupId>
