@@ -5,32 +5,32 @@
 <mapper namespace="pe.com.carspa.mapper.AlmacenOrdenCompraMapper">
 
 	<resultMap id="listarAlmacenOrdenCompraResultMap" type="pe.com.carspa.dominio.AlmacenOrdenCompra">
-		<result property="idAlmacenOrdenCompra" column="id_almacen_orden_compra" />
-		<result property="idAlmacen" column="id_almacen" />
+		<result property="idAlmacenOrdenCompra" column="cod_movimiento" />
+		<result property="descripcionAlmacen" column="descripcion_almacen" />
 		<result property="idOrdenCompra" column="id_orden_compra" />
 		<result property="fecha" column="fecha" />
 		<result property="estado" column="estado" />
-		<result property="idProveedor" column="id_proveedor" />
+		<result property="nombreProveedor" column="nombre_proveedor" />
 		<result property="nuTotalReg" column="nu_total_reg" />
 	</resultMap>
 
 	<resultMap id="listarporIDResultMap"
 		type="pe.com.carspa.dominio.AlmacenOrdenCompraMaterial">
 		<result property="idAlmacenOrdenCompraMaterial" column="id_almacen_orden_compra_material" />
-		<result property="idAlmacenOrdenCompra" column="id_almacen_orden_compra" />
 		<result property="idMaterial" column="id_material" />
+		<result property="nombreMaterial" column="nombre_material" />
+		<result property="marca" column="marca" />
 		<result property="cantidad" column="cantidad" />
 		<result property="cantidadFisica" column="cantidad_fisica" />
-		<result property="nombre" column="nombre" />
 	</resultMap>
 
 	<select id="listarAlmacenOrdenCompra" resultMap="listarAlmacenOrdenCompraResultMap">
 		select * from
-		logistica.fn_lg_select_almacen_orden_compra(#{idAlmacenOrdenCompra},#{estado},#{nuPagina},#{nuRegisMostrar})
+		logistica.fn_lo_select_almacen_orden_compra(#{idAlmacenOrdenCompra},#{estado},#{nuPagina},#{nuRegisMostrar})
 	</select>
 
 	<select id="listarMaterialporIDAlmacenOrdenCompra" resultMap="listarporIDResultMap">
 		select * from
-		logistica.fn_lg_select_almacen_orden_compra_material(#{idAlmacenOrdenCompra})
+		logistica.fn_lo_select_almacen_orden_compra_material(#{idAlmacenOrdenCompra})
 	</select>
 </mapper>

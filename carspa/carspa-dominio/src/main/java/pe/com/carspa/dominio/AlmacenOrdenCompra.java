@@ -14,8 +14,34 @@ public class AlmacenOrdenCompra implements Serializable {
 	private Integer idOrdenCompra;
 	private String fecha;
 	private String estado;
-	private String idProveedor;
+	private String descripcionAlmacen;
 	private Integer nuTotalReg;
+	private Integer idProveedor;
+	private String nombreProveedor;
+	
+	public Integer getIdProveedor() {
+		return idProveedor;
+	}
+
+	public void setIdProveedor(Integer idProveedor) {
+		this.idProveedor = idProveedor;
+	}
+
+	public String getNombreProveedor() {
+		return nombreProveedor;
+	}
+
+	public void setNombreProveedor(String nombreProveedor) {
+		this.nombreProveedor = nombreProveedor;
+	}
+
+	public String getDescripcionAlmacen() {
+		return descripcionAlmacen;
+	}
+
+	public void setDescripcionAlmacen(String descripcionAlmacen) {
+		this.descripcionAlmacen = descripcionAlmacen;
+	}
 
 	public Integer getNuTotalReg() {
 		return nuTotalReg;
@@ -65,11 +91,4 @@ public class AlmacenOrdenCompra implements Serializable {
 		this.estado = estado;
 	}
 
-	public String getIdProveedor() {
-		return idProveedor;
-	}
-
-	public void setIdProveedor(String idProveedor) {
-		this.idProveedor = idProveedor;
-	}
 }
