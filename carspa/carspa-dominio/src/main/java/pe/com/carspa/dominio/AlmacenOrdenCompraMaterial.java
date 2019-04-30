@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class AlmacenOrdenCompraMaterial implements Serializable {
-
+	private static final long serialVersionUID = 7632405137389582342L;
 	private Integer idAlmacenOrdenCompraMaterial;
 	private Integer idAlmacenOrdenCompra;
 	private Integer idMaterial;

@@ -37,7 +37,7 @@ public class ProveedorServiceImpl implements ProveedorService{
 
 	@Override
 	public ListarProveedorResponse listarProveedor(ListarProveedorRequest request) throws Exception {
-		return proveedoDAO.listarMateriales(request);
+		return proveedoDAO.listarProveedor(request);
 	}
 
 }

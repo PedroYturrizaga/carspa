@@ -4,10 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import pe.com.carspa.dominio.AlmacenOrdenCompraMaterial;
-import pe.com.carspa.dominio.Confirmacion;
 import pe.com.carspa.dominio.AlmacenOrdenCompra;
-import pe.com.carspa.dominio.Material;
+import pe.com.carspa.dominio.AlmacenOrdenCompraMaterial;
 
 public interface AlmacenOrdenCompraMapper {
 
