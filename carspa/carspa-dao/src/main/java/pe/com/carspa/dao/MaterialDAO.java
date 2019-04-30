@@ -10,14 +10,16 @@ import pe.com.carspa.dto.response.ResponseBase;
 
 public interface MaterialDAO {
 
-	public ResponseBase activarMaterial(EliminarMaterialRequest request)throws Exception;
-	public ResponseBase desactivarMaterial(EliminarMaterialRequest request)throws Exception;
-	public ResponseBase insertMaterial(InsertarActualizarMaterialRequest request)throws Exception;
-	public ResponseBase updateMaterial(InsertarActualizarMaterialRequest request)throws Exception;
-	public ListarMaterialResponse listarMateriales(ListarMaterialRequest request)throws Exception;
-	public ListarProveedorResponse comboProveedor(ListarProveedorRequest request)throws Exception;
+	public ResponseBase activarMaterial(EliminarMaterialRequest request) throws Exception;
 
+	public ResponseBase desactivarMaterial(EliminarMaterialRequest request) throws Exception;
 
+	public ResponseBase insertMaterial(InsertarActualizarMaterialRequest request) throws Exception;
 
+	public ResponseBase updateMaterial(InsertarActualizarMaterialRequest request) throws Exception;
+
+	public ListarMaterialResponse listarMateriales(ListarMaterialRequest request) throws Exception;
+
+	public ListarProveedorResponse comboProveedor(ListarProveedorRequest request) throws Exception;
 
 }

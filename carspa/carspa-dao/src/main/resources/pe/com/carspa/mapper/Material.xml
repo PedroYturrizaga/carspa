@@ -28,7 +28,7 @@
 		<result property="nuTotalReg" column="nu_total_reg"/>
 	</resultMap>
 	
-		<resultMap id="comboProveedorMap" type="pe.com.carspa.dominio.Proveedor">
+	<resultMap id="comboProveedorMap" type="pe.com.carspa.dominio.Proveedor">
 		<result property="idProveedor" column="id" />
 		<result property="nombreProveedor" column="no_descripcion" />
 	</resultMap>

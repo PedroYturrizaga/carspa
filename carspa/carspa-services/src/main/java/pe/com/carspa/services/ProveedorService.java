@@ -1,4 +1,4 @@
-package pe.com.carspa.dao;
+package pe.com.carspa.services;
 
 import pe.com.carspa.dto.request.ActualizarProveedorRequest;
 import pe.com.carspa.dto.request.EliminarProveedorRequest;
@@ -9,7 +9,7 @@ import pe.com.carspa.dto.response.EliminarProveedorResponse;
 import pe.com.carspa.dto.response.InsertarProveedorResponse;
 import pe.com.carspa.dto.response.ListarProveedorResponse;
 
-public interface ProveedorDAO {
+public interface ProveedorService {
 
 	public InsertarProveedorResponse insertProveedor(InsertarProveedorRequest request) throws Exception;
 

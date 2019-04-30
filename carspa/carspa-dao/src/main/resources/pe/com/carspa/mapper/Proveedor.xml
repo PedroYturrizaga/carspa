@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.com.carspa.mapper.ProveedorMapper">
+	<resultMap id="CRUDMap" type="pe.com.carspa.dominio.Confirmacion">
+		<result property="id" column="id" />
+		<result property="mensaje" column="no_respuesta" />
+	</resultMap>
+
+	<resultMap id="listaProveedorMap" type="pe.com.carspa.dominio.Proveedor">
+		<result property="idProveedor" column="id_proveedor" />
+		<result property="nombreProveedor" column="nombre_proveedor" />
+		<result property="direccion" column="direccion" />
+		<result property="email" column="email" />
+		<result property="telefono" column="telefono" />
+		<result property="contacto" column="contacto" />
+		<result property="idTipoPago" column="id_tipo_pago" />
+		<result property="nuTotalReg" column="nu_total_reg" />
+	</resultMap>
+
+	<select id="insertProveedor" resultMap="CRUDMap">
+		select * from
+		logistica.fn_funcion(#{nombreProveedor}, #{direccion}, #{email}, #{telefono}, #{contacto}, #{idTipoPago})
+	</select>
+
+	<select id="updateProveedor" resultMap="CRUDMap">
+		select * from
+		logistica.fn_funcion(#{idProveedor}, #{nombreProveedor}, #{direccion}, #{email}, #{telefono}, #{contacto}, #{idTipoPago})
+	</select>
+
+	<select id="deleteProveedor" resultMap="CRUDMap">
+		select * from
+		logistica.fn_funcion(#{idProveedor})
+	</select>
+
+	<select id="listarProveedor" resultMap="listaProveedorMap">
+		select * from
+		logistica.fn_funcion(#{nombreProveedor}, #{nuPagina}, #{nuRegisMostrar})
+	</select>
+</mapper>
