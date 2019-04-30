@@ -33,7 +33,7 @@ nb-configuration.xml
 
 RemoteSystemsTempFiles/
 
-carspa-sw/.settings/
-carspa-sw/.classpath
-carspa-sw/.project
-carspa-sw/target/
+carspa-dominio/.settings/
+carspa-dominio/.classpath
+carspa-dominio/.project
+carspa-dominio/target/

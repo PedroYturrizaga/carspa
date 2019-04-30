@@ -33,8 +33,7 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 
-
-/.project
+RemoteSystemsTempFiles/
 
 carspa-dominio/.settings/
 carspa-dominio/.classpath
@@ -55,6 +54,3 @@ carspa-sw/.settings/
 carspa-sw/.classpath
 carspa-sw/.project
 carspa-sw/target/
-
-
-
