@@ -4,7 +4,7 @@ import java.util.List;
 
 import pe.com.carspa.dominio.Proveedor;
 
-public class ListarProveedorResponse {
+public class ListarProveedorResponse extends ResponseBase {
 
 	private List<Proveedor> proveedor;
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import pe.com.carspa.dominio.AlmacenOrdenCompra;
 
-public class ListarAlmacenOrdenCompraResponse {
+public class ListarAlmacenOrdenCompraResponse extends ResponseBase{
 
 	private List<AlmacenOrdenCompra> almacenOrdenCompraList;
 

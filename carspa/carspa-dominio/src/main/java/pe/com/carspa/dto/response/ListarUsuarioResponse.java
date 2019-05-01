@@ -2,7 +2,7 @@ package pe.com.carspa.dto.response;
 
 import pe.com.carspa.dominio.Usuario;
 
-public class ListarUsuarioResponse {
+public class ListarUsuarioResponse extends ResponseBase {
 
 	private Usuario usuario;
 
