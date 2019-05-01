@@ -19,6 +19,7 @@ public class AlmacenOrdenCompraServiceImpl implements AlmacenOrdenCompraService 
 	@Override
 	public ListarAlmacenOrdenCompraResponse listarAlmacenOrdenCompra(
 			ListarAlmacenOrdenCompraRequest request) throws Exception {
+		System.out.println("ENTRO!");
 		return almacenOrdenCompraDAO.listarAlmacenOrdenCompra(request);
 	}
 

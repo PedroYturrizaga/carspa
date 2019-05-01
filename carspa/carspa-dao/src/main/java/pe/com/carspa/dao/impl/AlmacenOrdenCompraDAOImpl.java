@@ -30,6 +30,7 @@ public class AlmacenOrdenCompraDAOImpl implements AlmacenOrdenCompraDAO {
 				.listarAlmacenOrdenCompra(request.getIdAlmacenOrdenCompra(),
 						request.getEstado(), request.getNuPagina(),
 						request.getNuRegisMostrar());
+		System.out.println();
 		response.setAlmacenOrdenCompraList(almacenOrdenCompraList);
 		return response;
 	}

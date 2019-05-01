@@ -6,7 +6,6 @@
 	<artifactId>carspa-ws</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
-	<name>carspa-ws</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<jdk.version>1.8</jdk.version>
