@@ -2,6 +2,7 @@ package pe.com.carspa.dto.request;
 
 public class ListarMaquinariaRequest {
 	private String nombre;
+	private Integer estado;
 	private Integer nuPagina;
 	private Integer nuRegisMostrar;
 	public Integer getNuPagina() {
@@ -21,6 +22,12 @@ public class ListarMaquinariaRequest {
 	}
 	public void setNuRegisMostrar(Integer nuRegisMostrar) {
 		this.nuRegisMostrar = nuRegisMostrar;
+	}
+	public Integer getEstado() {
+		return estado;
+	}
+	public void setEstado(Integer estado) {
+		this.estado = estado;
 	}
 
 }

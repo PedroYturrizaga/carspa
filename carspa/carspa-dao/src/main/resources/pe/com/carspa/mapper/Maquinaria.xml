@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.com.carspa.mapper.MaquinariaMapper">
+	<resultMap id="CRUDMap" type="pe.com.carspa.dominio.Confirmacion">
+		<result property="id" column="id" />
+		<result property="mensaje" column="no_respuesta" />
+	</resultMap>
+	
+		<resultMap id="listaMaterialesMap" type="pe.com.carspa.dominio.Maquinaria">
+		<result property="idMaquinaria" column="id_maquinaria" />
+		<result property="nombre" column="nombre" />
+		<result property="marca" column="marca" />
+		<result property="cantidad" column="cantidad" />
+		<result property="fechaRegistro" column="fecha_compra" />
+		<result property="fechaMantenimiento" column="fecha_mantenimiento	" />
+		<result property="detalle" column="detalle" />
+		<result property="nuTotalReg" column="nu_total_reg" />
+
+	</resultMap>
+	
+	<select id="desactivarMaquinaria" resultMap="CRUDMap">
+		select * from
+		logistica.fn_lo_desactivar_maquinaria(#{idMaquinaria} )
+	</select>
+	
+	<select id="activarMaquinaria" resultMap="CRUDMap">
+		select * from
+		logistica.fn_lo_activar_maquinaria(#{idMaquinaria} )
+	</select>
+	
+	<select id="insertMaquinaria" resultMap="CRUDMap">
+		select * from
+		logistica.fn_lo_insert_maquinaria(
+		#{nombre},
+		#{marca},
+		#{cantidad},
+		#{fechaMantenimiento},
+		#{detalle}
+	</select>
+	
+		<select id="updateMaquinaria" resultMap="CRUDMap">
+		select * from
+		logistica.fn_lo_update_maquinaria(
+		#{idMaquinaria},
+		#{cantidad},
+		#{fechaMantenimiento},
+		#{detalle}
+	</select>
+	
+	<select id="listarMaquinaria" resultMap="listaMaquinariaMap">
+		select * from
+		logistica.fn_lo_select_maquinarias(#{nombre}, #{estado}, #{nuPagina}, #{nuRegisMostrar})
+	</select>
+
+</mapper>
